@@ -1,5 +1,6 @@
 package com.kaique.kaique.meusjogos
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -14,7 +15,16 @@ class ListaJogosActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lista_jogos)
         rvMeusJogos.adapter = JogosAdapter(criajogos(), this, {
             //Toast é o modal que aparece o texto.
-            Toast.makeText(this, it.nome, Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, it.nome, Toast.LENGTH_LONG).show()
+            //Starto minha activity
+            val intent = Intent(this,DetalheJogoActivity::class.java)
+            //IT é meu Objeto, é a coisa que recebo
+            //Este objeto já foi gerado anteriormente
+            //Para este IT Funcionar eu tive que converter o objeto para Parcelable
+            //Essa conversão deve ser feita no data class de meu objeto
+            intent.putExtra("jogo",it)
+            //Starto minha activity passando o objeto e iniciando a nova Activity
+            startActivity(intent)
         })
 
         //Tipo de lista por exemplo essa linha debaixo cria uma lista na vertical
@@ -27,13 +37,13 @@ class ListaJogosActivity : AppCompatActivity() {
                 Jogo(R.drawable.godofwarps4,
                         "God of War",
                         2018,
-                        "God of War é um jogo eletrônico de ação-aventura desenvolvido pela SIE " +
-                                "Santa Monica Studio e publicado pela Sony Interactive Entertainment. Foi lançado em 20 " +
-                                "de abril de 2018 para o PlayStation 4. É o oitavo jogo da série God of War e a sequência " +
-                                "dos eventos ocorridos em God of War III. O título é um recomeço para a franquia e leva a " +
-                                "série para o mundo da mitologia nórdica — todos os jogos anteriores tinham como " +
-                                "cenário a mitologia grega. Kratos retorna como o protagonista e agora tem ao seu lado " +
-                                "um filho chamado Atreus. Kratos atua como um mentor e protetor de Atreus e tem de " +
-                                "dominar a raiva que o impulsionou por muitos anos."))
+                        //Preciso dar um getString pois o R.string traz um int.
+                        getString(R.string.godofwarDescricao),
+                        R.drawable.godofwar),
+                Jogo(R.drawable.seaofthieve,
+                        "Sea Of Thieves",
+                        2018,
+                        getString(R.string.seaofthievesDescricao),
+                        R.drawable.seaofthievesbanner))
     }
 }
